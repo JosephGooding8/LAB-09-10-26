@@ -80,11 +80,12 @@ plastic_data_all %>% head(n = 10)
 
 ```{r Ex1, message = FALSE}
 # Write your code here to answer exercise 1
-plastic_data_all |> 
-  group_by(region) |>
-  summarise(n = n()) |>
-  arrange(desc(n))
+plastic_data_all |>
+    group_by(region) |>
+    summarise( count = n() ) |>
+  arrange(desc(count))
 
+#Therefore region MAX is africa
 
 ```
 
@@ -95,17 +96,14 @@ plastic_data_all |>
 ```{r Ex2, message = FALSE}
 # Write your code here to answer exercise 2
 plastic_data_all <- plastic_data_all |>
-  mutate(
-    total_mismanage_plastic =
-    mismanaged_plastic * population
-  )
+mutate(
+     total_mismanage_plastic = mismanaged_plastic * population) |>
+  print(width=Inf)
+
+
+  
 # Mean total arranged
- plastic_data_all |>
-  group_by(region) |>
-  summarise(
-    mean_total = mean(total_mismanage_plastic)
-  ) |>
-  arrange(desc(mean_total))
+plastic_data_all |> summarise(mean_MPPR = mean(total_mismanage_plastic))
 
 ```
 
@@ -114,40 +112,25 @@ plastic_data_all <- plastic_data_all |>
 
 ```{r Ex3, message = FALSE}
 # Write your code here to answer exercise 3
-plastic_data_all |>
-  mutate(
-    pct_mismanaged_plastic_ocean =
-      mismanaged_plastic_ocean /
-      mismanaged_plastic * 100
-  ) |>
-  drop_na(pct_mismanaged_plastic_ocean) |>
-  group_by(region) |>
-  summarise(
-    median_pct =
-      median(pct_mismanaged_plastic_ocean)
-  )
+plastic_data_all <- plastic_data_all |>
+  mutate(pct_mismanaged_plastic_ocean = (mismanaged_plastic_ocean / total_mismanage_plastic) * 100 ) |>
+  print(width = Inf)
 
-```
+plastic_data_all |>
+  group_by(region) |>
+  summarise(  median_pct = median(pct_mismanaged_plastic_ocean, ))
+ 
+
 
 
 ### Ex 4.
+plastic_data_all <- plastic_data_all |>
+  rename(pop = population, misman_plas_ocn = mismanaged_plastic_ocean, misman_plas = mismanaged_plastic, sum_misman_plas = total_mismanage_plastic  ) |>
+  print()
 
-```{r Ex4, message = FALSE}
 # Write your code here to answer exercise 4
-plastic_data_all <- plastic_data_all %>%
-  mutate(
-    region = str_replace_all(
-      region,
-      "Latin America and The Caribbean",
-      "LAC"
-    )
-  )
-# Interesting data
 plastic_data_all |>
-  group_by(region) |>
-  summarise(
-    mean_plastic_pc = mean(mismanaged_plastic)
-  ) |>
-  arrange(desc(mean_plastic_pc))
+    mutate(region = str_replace_all(region, "Latin America and The Caribbean",
+                                  "LAC"))
 
-```
+unique(plastic_data_all$region)
