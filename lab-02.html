@@ -421,19 +421,98 @@ plastic_data_all %&gt;% head(n = 10)</code></pre>
 <h2>Exercises</h2>
 <div id="ex-1." class="section level3">
 <h3>Ex 1.</h3>
-<pre class="r"><code># Write your code here to answer exercise 1</code></pre>
+<pre class="r"><code># Write your code here to answer exercise 1
+plastic_data_all |&gt; 
+  group_by(region) |&gt;
+  summarise(n = n()) |&gt;
+  arrange(desc(n))</code></pre>
+<pre><code>## # A tibble: 6 × 2
+##   region                              n
+##   &lt;chr&gt;                           &lt;int&gt;
+## 1 Africa                             43
+## 2 Asia                               39
+## 3 Latin America and The Caribbean    34
+## 4 Europe                             31
+## 5 Oceania                            10
+## 6 North America                       2</code></pre>
 </div>
 <div id="ex-2." class="section level3">
 <h3>Ex 2.</h3>
-<pre class="r"><code># Write your code here to answer exercise 2</code></pre>
+<pre class="r"><code># Write your code here to answer exercise 2
+plastic_data_all &lt;- plastic_data_all |&gt;
+  mutate(
+    total_mismanage_plastic =
+    mismanaged_plastic * population
+  )
+# Mean total arranged
+ plastic_data_all |&gt;
+  group_by(region) |&gt;
+  summarise(
+    mean_total = mean(total_mismanage_plastic)
+  ) |&gt;
+  arrange(desc(mean_total))</code></pre>
+<pre><code>## # A tibble: 6 × 2
+##   region                          mean_total
+##   &lt;chr&gt;                                &lt;dbl&gt;
+## 1 Asia                              1026059.
+## 2 Africa                             320729.
+## 3 Latin America and The Caribbean    193450.
+## 4 North America                      147190.
+## 5 Europe                              38180.
+## 6 Oceania                             14577.</code></pre>
 </div>
 <div id="ex-3." class="section level3">
 <h3>Ex 3.</h3>
-<pre class="r"><code># Write your code here to answer exercise 3</code></pre>
+<pre class="r"><code># Write your code here to answer exercise 3
+plastic_data_all |&gt;
+  mutate(
+    pct_mismanaged_plastic_ocean =
+      mismanaged_plastic_ocean /
+      mismanaged_plastic * 100
+  ) |&gt;
+  drop_na(pct_mismanaged_plastic_ocean) |&gt;
+  group_by(region) |&gt;
+  summarise(
+    median_pct =
+      median(pct_mismanaged_plastic_ocean)
+  )</code></pre>
+<pre><code>## # A tibble: 6 × 2
+##   region                          median_pct
+##   &lt;chr&gt;                                &lt;dbl&gt;
+## 1 Africa                               0.526
+## 2 Asia                                 0.974
+## 3 Europe                               0.846
+## 4 Latin America and The Caribbean      3.07 
+## 5 North America                        0.959
+## 6 Oceania                              1.58</code></pre>
 </div>
 <div id="ex-4." class="section level3">
 <h3>Ex 4.</h3>
-<pre class="r"><code># Write your code here to answer exercise 4</code></pre>
+<pre class="r"><code># Write your code here to answer exercise 4
+plastic_data_all &lt;- plastic_data_all %&gt;%
+  mutate(
+    region = str_replace_all(
+      region,
+      &quot;Latin America and The Caribbean&quot;,
+      &quot;LAC&quot;
+    )
+  )
+# Interesting data
+plastic_data_all |&gt;
+  group_by(region) |&gt;
+  summarise(
+    mean_plastic_pc = mean(mismanaged_plastic)
+  ) |&gt;
+  arrange(desc(mean_plastic_pc))</code></pre>
+<pre><code>## # A tibble: 6 × 2
+##   region        mean_plastic_pc
+##   &lt;chr&gt;                   &lt;dbl&gt;
+## 1 Africa                 13.3  
+## 2 LAC                    12.8  
+## 3 Asia                    6.41 
+## 4 Oceania                 4.63 
+## 5 Europe                  2.25 
+## 6 North America           0.722</code></pre>
 </div>
 </div>
 
