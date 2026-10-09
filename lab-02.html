@@ -9,7 +9,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
-<meta name="author" content="Team Name: JosephGoo, TomA, JerryG, Joey" />
+<meta name="author" content="Team Name: JosephGoo, TomA, JerryG, Joey, Junxiu" />
 
 <meta name="date" content="2026-10-09" />
 
@@ -351,7 +351,7 @@ display: none;
 
 
 <h1 class="title toc-ignore">Lab 02 - Global plastic waste</h1>
-<h4 class="author">Team Name: JosephGoo, TomA, JerryG, Joey</h4>
+<h4 class="author">Team Name: JosephGoo, TomA, JerryG, Joey, Junxiu</h4>
 <h4 class="date">2026-10-09</h4>
 
 </div>
@@ -373,7 +373,7 @@ data2 &lt;- read_csv2(&quot;data/per-capita-ocean-plastic-waste.txt&quot;)
 
 
 # Member 1 (pair 1) write code to load File 3 data here:
-
+data3 &lt;- read_tsv(&quot;data/UN_country_population.tsv&quot;)
 
 
 # Member 3 (pair 2) write code to load File 4 data here:</code></pre>
@@ -387,26 +387,28 @@ plastic_data_all &lt;- data2
 
 
 # Member 1 (pair 1) write code to join your data to &#39;plastic_data_all&#39;:
-
+plastic_data_all &lt;- data3 %&gt;%
+  select(-name) %&gt;%
+  right_join(plastic_data_all, by = &quot;code&quot;)
 
 
 
 # Member 3 (pair 2) write code to join your data to &#39;plastic_data_all&#39;:</code></pre>
 <pre class="r"><code># Member 2 (pair 1) adds code here to view the first 10 rows of &#39;plastic_data_all&#39;
 plastic_data_all %&gt;% head(n = 10)</code></pre>
-<pre><code>## # A tibble: 10 × 3
-##    name                code  mismanaged_plastic_ocean
-##    &lt;chr&gt;               &lt;chr&gt;                    &lt;dbl&gt;
-##  1 Albania             ALB                    0.543  
-##  2 Algeria             DZA                    0.134  
-##  3 Angola              AGO                    0.0270 
-##  4 Antigua and Barbuda ATG                    0.0206 
-##  5 Argentina           ARG                    0.0924 
-##  6 Australia           AUS                    0.00127
-##  7 Bahamas             BHS                    0.0514 
-##  8 Bahrain             BHR                    0      
-##  9 Bangladesh          BGD                    0.151  
-## 10 Barbados            BRB                    0.157</code></pre>
+<pre><code>## # A tibble: 10 × 4
+##    code  population name       mismanaged_plastic_ocean
+##    &lt;chr&gt;      &lt;dbl&gt; &lt;chr&gt;                         &lt;dbl&gt;
+##  1 COM         784. Comoros                     0      
+##  2 DJI        1066. Djibouti                    0.00411
+##  3 ERI        3474. Eritrea                     0.0137 
+##  4 KEN       50443. Kenya                       0.00493
+##  5 MDG       27187. Madagascar                  0.0287 
+##  6 MUS        1296. Mauritius                   0      
+##  7 MOZ       29850. Mozambique                  0.0838 
+##  8 REU         945. Reunion                     0      
+##  9 SYC         104. Seychelles                  0      
+## 10 SOM       15690. Somalia                     0</code></pre>
 </div>
 <div id="exercises" class="section level2">
 <h2>Exercises</h2>
