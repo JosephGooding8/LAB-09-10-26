@@ -1,6 +1,6 @@
 ---
 title: "Lab 02 - Global plastic waste"
-author: "Team Name: JosephGoo, TomA, JerryG, Joey"
+author: "Team Name: JosephGoo, TomA, JerryG, Joey, Junxiu"
 date: "`r Sys.Date()`"
 output: html_document
 ---
